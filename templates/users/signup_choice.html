@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - HomeFood Connect{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="text-center mb-5">
+        <h2 class="display-4 fw-bold">Join Our Community</h2>
+        <p class="lead text-muted">Are you here to order delicious food or to share your culinary skills?</p>
+    </div>
+    <div class="row justify-content-center g-4">
+        <div class="col-md-5">
+            <div class="card h-100 p-5 text-center shadow">
+                <div class="fs-1 mb-3">😋</div>
+                <h3 class="fw-bold mb-3">Order Food</h3>
+                <p class="text-muted mb-4">Discover authentic homemade meals and get them delivered to your doorstep.</p>
+                <a href="{% url 'customer_signup' %}" class="btn btn-primary btn-lg mt-auto">Sign Up as Customer</a>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card h-100 p-5 text-center shadow">
+                <div class="fs-1 mb-3">👨‍🍳</div>
+                <h3 class="fw-bold mb-3">Start Selling</h3>
+                <p class="text-muted mb-4">Turn your passion for cooking into a rewarding business from home.</p>
+                <a href="{% url 'homemaker_signup' %}" class="btn btn-outline-primary btn-lg mt-auto">Sign Up as Homemaker</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

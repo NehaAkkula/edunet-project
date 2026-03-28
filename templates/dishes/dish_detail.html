@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ dish.name }} - HomeFood Connect{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row g-5">
+        <div class="col-md-6">
+            <img src="{{ dish.image.url }}" class="img-fluid rounded-4 shadow-lg w-100" style="height: 500px; object-fit: cover;" alt="{{ dish.name }}">
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge bg-light text-dark border px-3 py-2 fs-6">{{ dish.category }}</span>
+                <div class="fs-4">
+                    {% if dish.average_rating > 0 %}
+                        <span class="fw-bold">{{ dish.average_rating }}</span> ⭐
+                    {% endif %}
+                </div>
+            </div>
+            <h1 class="display-4 fw-bold mb-4 serif-font">{{ dish.name }}</h1>
+            <h2 class="text-primary mb-4 fw-bold">₹{{ dish.price }}</h2>
+            
+            <p class="lead text-muted mb-5">{{ dish.description }}</p>
+            
+            <div class="mb-5">
+                <h4 class="fw-bold mb-3">Ingredients</h4>
+                <p class="text-muted">{{ dish.ingredients }}</p>
+            </div>
+
+            <div class="card p-4 border-0 shadow-sm bg-light mb-5">
+                <div class="d-flex align-items-center">
+                    <div class="fs-1 me-4">👩‍🍳</div>
+                    <div>
+                        <h5 class="fw-bold mb-1">Prepared by {{ dish.homemaker.username }}</h5>
+                        <p class="text-muted mb-0 small">Authentic home chef</p>
+                    </div>
+                </div>
+            </div>
+
+            <form action="{% url 'place_order' %}" method="post" class="d-grid">
+                {% csrf_token %}
+                <input type="hidden" name="dish_id" value="{{ dish.id }}">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Quantity</span>
+                    <input type="number" name="quantity" value="1" min="1" class="form-control form-control-lg">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg py-3 fw-bold">Order Now</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

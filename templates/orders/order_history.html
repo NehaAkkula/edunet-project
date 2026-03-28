@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}My Orders - HomeFood Connect{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="display-5 fw-bold mb-5">Your <span style="color: var(--primary-maroon)">Order History</span></h2>
+    
+    <div class="table-responsive dashboard-table p-3">
+        <table class="table table-hover align-middle text-center">
+            <thead class="bg-light">
+                <tr>
+                    <th>Order #</th>
+                    <th>Dish</th>
+                    <th>Homemaker</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Review</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>#{{ order.id }}</td>
+                        <td class="fw-bold">{{ order.dish.name }}</td>
+                        <td>{{ order.dish.homemaker.username }}</td>
+                        <td class="fw-bold">₹{{ order.total_price }}</td>
+                        <td>
+                            <span class="badge border
+                                {% if order.status == 'Ordered' %}text-info
+                                {% elif order.status == 'Preparing' %}text-warning
+                                {% elif order.status == 'Delivered' %}text-success
+                                {% elif order.status == 'Denied' %}text-danger
+                                {% else %}text-secondary{% endif %}">
+                                {{ order.status }}
+                            </span>
+                        </td>
+                        <td class="text-muted">{{ order.created_at|date:"d M Y" }}</td>
+                        <td>
+                            {% if order.status == 'Delivered' %}
+                                <a href="{% url 'add_review' order.dish.id %}" class="btn btn-outline-primary btn-sm">Write Review</a>
+                            {% else %}
+                                <span class="text-muted small">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5">
+                            <h4 class="text-muted">You haven't ordered anything yet.</h4>
+                            <a href="{% url 'menu' %}" class="btn btn-primary mt-3">Browse Menu</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}HomeFood Connect - Authentic Homemade Flavors{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content text-center">
+        <h1 class="display-2 fw-bold mb-3 text-white">Taste the Love of <br><span style="color: var(--accent-gold)">Homemade Food</span></h1>
+        <p class="lead mb-5 fs-4">Connecting you with the finest home chefs for authentic, healthy, and delicious meals.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'menu' %}" class="btn btn-primary btn-lg px-5 py-3 fs-5">Order Food</a>
+            <a href="{% url 'signup' %}?role=homemaker" class="btn btn-outline-light btn-lg px-5 py-3 fs-5">Start Selling</a>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5 mt-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <h2 class="display-4 fw-bold mb-4">Why HomeFood Connect?</h2>
+            <p class="lead text-muted mb-4">We believe nothing beats the taste and health of food cooked in a home kitchen with love and fresh ingredients.</p>
+            <div class="d-flex mb-3">
+                <div class="me-3 fs-2 text-primary">🥘</div>
+                <div>
+                    <h4 class="fw-bold">Authentic Recipes</h4>
+                    <p class="text-muted">Directly from the kitchens of passionate homemakers.</p>
+                </div>
+            </div>
+            <div class="d-flex mb-3">
+                <div class="me-3 fs-2 text-primary">🌿</div>
+                <div>
+                    <h4 class="fw-bold">Fresh & Healthy</h4>
+                    <p class="text-muted">No preservatives, just pure ingredients and traditional methods.</p>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="me-3 fs-2 text-primary">🤝</div>
+                <div>
+                    <h4 class="fw-bold">Support Local Chefs</h4>
+                    <p class="text-muted">Empowering homemakers to share their culinary talents.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 text-center">
+             <div class="card p-4 shadow-lg border-0 bg-white">
+                <img src="{% static 'images/hero-bg.jpg' %}" alt="Indian Food" class="img-fluid rounded-3 shadow-sm">
+             </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

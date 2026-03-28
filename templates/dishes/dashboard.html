@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Homemaker Dashboard - HomeFood Connect{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="display-5 fw-bold">Homemaker <span style="color: var(--primary-maroon)">Dashboard</span></h2>
+        <a href="{% url 'dish_add' %}" class="btn btn-primary btn-lg">+ Add New Dish</a>
+    </div>
+
+    <div class="row">
+        <!-- Dish Management -->
+        <div class="col-12 mb-5">
+            <h3 class="mb-4 serif-font">Manage Your Dishes</h3>
+            <div class="table-responsive dashboard-table p-3">
+                <table class="table table-hover align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Dish</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Rating</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dish in dishes %}
+                            <tr>
+                                <td class="fw-bold">
+                                    <img src="{{ dish.image.url }}" class="rounded me-2" width="50" height="50" style="object-fit: cover;">
+                                    {{ dish.name }}
+                                </td>
+                                <td><span class="badge border text-dark">{{ dish.category }}</span></td>
+                                <td class="fw-bold">₹{{ dish.price }}</td>
+                                <td>{{ dish.average_rating }} ⭐</td>
+                                <td>
+                                    <a href="{% url 'dish_edit' dish.id %}" class="btn btn-outline-primary btn-sm me-1">Edit</a>
+                                    <a href="{% url 'dish_delete' dish.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">You haven't added any dishes yet.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Incoming Orders -->
+        <div class="col-12">
+            <h3 class="mb-4 serif-font">Recent Orders</h3>
+            <div class="table-responsive dashboard-table p-3">
+                <table class="table table-hover align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Dish</th>
+                            <th>Customer</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in incoming_orders %}
+                            <tr>
+                                <td>#{{ order.id }}</td>
+                                <td class="fw-bold">{{ order.dish.name }}</td>
+                                <td>{{ order.customer.username }}</td>
+                                <td>{{ order.quantity }}</td>
+                                <td class="fw-bold">₹{{ order.total_price }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if order.status == 'Ordered' %}bg-info
+                                        {% elif order.status == 'Preparing' %}bg-warning
+                                        {% elif order.status == 'Delivered' %}bg-success
+                                        {% else %}bg-secondary{% endif %}">
+                                        {{ order.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if order.status == 'Ordered' %}
+                                        <form action="{% url 'update_order_status' order.id %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="status" value="Preparing">
+                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                        </form>
+                                        <form action="{% url 'update_order_status' order.id %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="status" value="Denied">
+                                            <button type="submit" class="btn btn-danger btn-sm">Deny</button>
+                                        </form>
+                                    {% elif order.status == 'Preparing' %}
+                                         <form action="{% url 'update_order_status' order.id %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="status" value="Out for Delivery">
+                                            <button type="submit" class="btn btn-info btn-sm">Out for Delivery</button>
+                                        </form>
+                                    {% elif order.status == 'Out for Delivery' %}
+                                         <form action="{% url 'update_order_status' order.id %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="status" value="Delivered">
+                                            <button type="submit" class="btn btn-dark btn-sm">Mark Delivered</button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">No orders yet.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

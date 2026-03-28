@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Explore Our Menu - HomeFood Connect{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-4">
+    <div class="text-center mb-5">
+        <h2 class="display-4 fw-bold mb-3">Today's <span style="color: var(--primary-maroon)">Special Menu</span></h2>
+        <p class="lead text-muted">Authentic homemade food delivered with love.</p>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="d-flex flex-wrap justify-content-center mb-5">
+        <a href="{% url 'menu' %}" class="category-pill {% if not active_category %}active{% endif %} mb-2">All</a>
+        {% for cat in categories %}
+            <a href="{% url 'menu' %}?category={{ cat }}" class="category-pill {% if active_category == cat %}active{% endif %} mb-2">{{ cat }}</a>
+        {% endfor %}
+    </div>
+
+    <!-- Dish Grid -->
+    <div class="row g-4">
+        {% for dish in dishes %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ dish.image.url }}" class="card-img-top" alt="{{ dish.name }}" style="height: 200px; object-fit: cover;">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-light text-dark border">{{ dish.category }}</span>
+                            <div class="rating-stars">
+                                {% if dish.average_rating > 0 %}
+                                    <span class="fw-bold">{{ dish.average_rating }}</span> ⭐
+                                {% else %}
+                                    <span class="text-muted small">No ratings yet</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <h4 class="card-title fw-bold mb-2">{{ dish.name }}</h4>
+                        <p class="card-text text-muted small mb-3">{{ dish.description|truncatechars:80 }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="price-tag">₹{{ dish.price }}</span>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'dish_detail' dish.id %}" class="btn btn-outline-primary btn-sm px-3">Details</a>
+                                <form action="{% url 'place_order' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="dish_id" value="{{ dish.id }}">
+                                    <button type="submit" class="btn btn-primary btn-sm px-3">Order</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <h3 class="text-muted">No dishes found in this category.</h3>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
