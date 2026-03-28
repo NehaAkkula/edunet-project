@@ -6,7 +6,10 @@ HomeFood Connect is a premium, production-ready platform connecting home chefs w
 
 The platform uses a sophisticated **Maroon (#800000)** and **Cream (#FFF5E1)** palette with **Gold** accents, creating a warm and authentic Indian culinary feel.
 
+[**🚀 Launch Application**](http://127.0.0.1:8000/)
+
 ![Landing Page](file:///C:/Users/admin/.gemini/antigravity/brain/af12269b-e8a6-496d-bae4-c184028ac7e9/landing_page_1774623244929.png)
+
 
 ## 🍛 Dynamic Menu System
 
@@ -35,6 +38,17 @@ Customers can track their orders through a multi-step status flow (Ordered → P
 - **Robust Order Flow**: Full lifecycle management of food orders.
 - **Premium Aesthetics**: Responsive design with hover effects, shadows, and elegant typography.
 
+## 🚀 Getting Started
+
+To explore the platform, you can use the following links (running locally):
+
+- **Landing Page**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- **Explore Menu**: [http://127.0.0.1:8000/dishes/menu/](http://127.0.0.1:8000/dishes/menu/)
+- **Specific Dish (Example)**: [http://127.0.0.1:8000/dishes/1/](http://127.0.0.1:8000/dishes/1/)
+- **Chef Signup**: [http://127.0.0.1:8000/users/signup/homemaker/](http://127.0.0.1:8000/users/signup/homemaker/)
+- **Admin Panel**: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+
 ### Test Accounts:
+
 - **Homemaker**: `test_homemaker` / `password123`
 - **Customer**: `test_customer` / `TestPass123!`
